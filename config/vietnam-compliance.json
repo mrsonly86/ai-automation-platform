@@ -1,0 +1,123 @@
+{
+  "vietnam": {
+    "businessLicense": {
+      "required": true,
+      "issuingAuthority": "Department of Planning and Investment",
+      "renewalPeriod": "annual",
+      "documents": [
+        "Business Registration Certificate",
+        "Investment Certificate (if applicable)",
+        "Environmental Impact Assessment",
+        "Fire Safety Certificate"
+      ]
+    },
+    "taxCompliance": {
+      "corporateIncomeTax": {
+        "rate": 0.20,
+        "filingDeadline": "March 31",
+        "paymentSchedule": "quarterly"
+      },
+      "valueAddedTax": {
+        "standardRate": 0.10,
+        "reducedRate": 0.05,
+        "filingFrequency": "monthly"
+      },
+      "personalIncomeTax": {
+        "progressiveRates": [0.05, 0.10, 0.15, 0.20, 0.25, 0.30, 0.35],
+        "filingDeadline": "March 31"
+      },
+      "foreignContractorTax": {
+        "rate": 0.05,
+        "applicableToForeignEntities": true
+      }
+    },
+    "laborCompliance": {
+      "socialInsurance": {
+        "employerContribution": 0.175,
+        "employeeContribution": 0.08,
+        "filingFrequency": "monthly"
+      },
+      "healthInsurance": {
+        "employerContribution": 0.03,
+        "employeeContribution": 0.015
+      },
+      "unemploymentInsurance": {
+        "employerContribution": 0.01,
+        "employeeContribution": 0.01
+      },
+      "workPermits": {
+        "required": true,
+        "foreignWorkers": true,
+        "duration": "2 years",
+        "renewalRequired": true
+      }
+    },
+    "environmentalCompliance": {
+      "environmentalImpactAssessment": {
+        "required": true,
+        "renewalPeriod": "5 years"
+      },
+      "wasteManagement": {
+        "licensingRequired": true,
+        "reportingFrequency": "quarterly"
+      },
+      "emissionStandards": {
+        "monitoring": true,
+        "reportingRequired": true
+      }
+    },
+    "industrySpecific": {
+      "banking": {
+        "statebankLicense": true,
+        "capitalRequirements": "minimum 3 trillion VND",
+        "reportingRequirements": "monthly to SBV"
+      },
+      "insurance": {
+        "licenseRequired": true,
+        "capitalRequirements": "vary by type",
+        "solvencyRatio": "minimum 100%"
+      },
+      "telecommunications": {
+        "licenseRequired": true,
+        "foreignOwnership": "maximum 49%"
+      },
+      "realEstate": {
+        "landUseCertificate": true,
+        "constructionPermit": true,
+        "firePreventionCertificate": true
+      }
+    },
+    "reporting": {
+      "annualReports": {
+        "required": true,
+        "filingDeadline": "March 31",
+        "publicDisclosure": "for listed companies"
+      },
+      "auditRequirements": {
+        "required": true,
+        "independentAuditor": true,
+        "frequency": "annual"
+      },
+      "statisticsReporting": {
+        "generalStatisticsOffice": true,
+        "frequency": "monthly/quarterly/annual"
+      }
+    }
+  },
+  "international": {
+    "transferPricing": {
+      "documentation": true,
+      "armsPrincipleLengthPricing": true,
+      "countryByCountryReporting": "for large MNEs"
+    },
+    "foreignExchange": {
+      "stateBank": "approval required for large transactions",
+      "reportingThreshold": "500,000 USD"
+    },
+    "antiMoneyLaundering": {
+      "customerDueDiligence": true,
+      "suspiciousTransactionReporting": true,
+      "recordKeeping": "minimum 5 years"
+    }
+  }
+}

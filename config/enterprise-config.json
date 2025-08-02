@@ -1,0 +1,120 @@
+{
+  "app": {
+    "name": "Enterprise Conglomerate Management System",
+    "version": "1.0.0",
+    "environment": "development",
+    "port": 3000
+  },
+  "database": {
+    "mongodb": {
+      "uri": "mongodb://localhost:27017/enterprise-management",
+      "options": {
+        "maxPoolSize": 10,
+        "serverSelectionTimeoutMS": 5000,
+        "socketTimeoutMS": 45000
+      }
+    },
+    "redis": {
+      "uri": "redis://localhost:6379"
+    }
+  },
+  "security": {
+    "jwt": {
+      "secret": "your-super-secure-jwt-secret-key-change-in-production",
+      "expiresIn": "24h",
+      "refreshExpiresIn": "7d"
+    },
+    "encryption": {
+      "algorithm": "aes-256-gcm",
+      "keyLength": 32
+    },
+    "rateLimit": {
+      "windowMs": 900000,
+      "maxRequests": 100
+    }
+  },
+  "vietnam": {
+    "payments": {
+      "vnpay": {
+        "enabled": true,
+        "sandbox": true
+      },
+      "zalopay": {
+        "enabled": true,
+        "sandbox": true
+      },
+      "momo": {
+        "enabled": true,
+        "sandbox": true
+      }
+    },
+    "banking": {
+      "vietcombank": {
+        "enabled": false
+      },
+      "techcombank": {
+        "enabled": false
+      }
+    },
+    "government": {
+      "taxAuthority": {
+        "enabled": false
+      },
+      "socialInsurance": {
+        "enabled": false
+      }
+    }
+  },
+  "features": {
+    "aiAgents": {
+      "enabled": true,
+      "totalAgents": 18
+    },
+    "assetManagement": {
+      "enabled": true,
+      "rfidTracking": true,
+      "barcodeScanning": true,
+      "iotSensors": true
+    },
+    "buildingManagement": {
+      "enabled": true,
+      "hvacControl": true,
+      "lightingAutomation": true,
+      "securityIntegration": true
+    },
+    "fleetManagement": {
+      "enabled": true,
+      "realTimeTracking": true,
+      "routeOptimization": true,
+      "fuelManagement": true
+    },
+    "multiCompany": {
+      "enabled": true,
+      "consolidation": true,
+      "intercompanyTransactions": true,
+      "governance": true
+    }
+  },
+  "integrations": {
+    "email": {
+      "provider": "smtp",
+      "enabled": false
+    },
+    "sms": {
+      "provider": "twilio",
+      "enabled": false
+    },
+    "storage": {
+      "provider": "aws-s3",
+      "enabled": false
+    },
+    "monitoring": {
+      "sentry": {
+        "enabled": false
+      },
+      "analytics": {
+        "enabled": false
+      }
+    }
+  }
+}
