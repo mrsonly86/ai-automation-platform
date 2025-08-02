@@ -1,0 +1,261 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          String   @id @default(cuid())
+  email       String   @unique
+  name        String?
+  password    String
+  avatar      String?
+  role        Role     @default(USER)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  projects    Project[]
+  workflows   Workflow[]
+  analytics   Analytics[]
+  
+  @@map("users")
+}
+
+model Project {
+  id            String        @id @default(cuid())
+  name          String
+  description   String?
+  status        ProjectStatus @default(ACTIVE)
+  progress      Int           @default(0)
+  repository    String?
+  deploymentUrl String?
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+
+  userId        String
+  user          User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  workflows     Workflow[]
+  deployments   Deployment[]
+  integrations  Integration[]
+  
+  @@map("projects")
+}
+
+model Workflow {
+  id          String          @id @default(cuid())
+  name        String
+  description String?
+  config      Json
+  status      WorkflowStatus  @default(ACTIVE)
+  isActive    Boolean         @default(true)
+  createdAt   DateTime        @default(now())
+  updatedAt   DateTime        @updatedAt
+
+  userId      String
+  user        User            @relation(fields: [userId], references: [id], onDelete: Cascade)
+  
+  projectId   String
+  project     Project         @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  steps       WorkflowStep[]
+  executions  WorkflowExecution[]
+  
+  @@map("workflows")
+}
+
+model WorkflowStep {
+  id          String     @id @default(cuid())
+  name        String
+  type        StepType
+  config      Json
+  order       Int
+  status      StepStatus @default(PENDING)
+  progress    Int        @default(0)
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  workflowId  String
+  workflow    Workflow   @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  
+  @@map("workflow_steps")
+}
+
+model WorkflowExecution {
+  id          String            @id @default(cuid())
+  status      ExecutionStatus   @default(PENDING)
+  startedAt   DateTime?
+  completedAt DateTime?
+  errorMessage String?
+  logs        Json?
+  createdAt   DateTime          @default(now())
+
+  workflowId  String
+  workflow    Workflow          @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  
+  @@map("workflow_executions")
+}
+
+model Integration {
+  id          String            @id @default(cuid())
+  name        String
+  type        IntegrationType
+  config      Json
+  isConnected Boolean           @default(false)
+  lastSyncAt  DateTime?
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  projectId   String
+  project     Project           @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  @@map("integrations")
+}
+
+model AIAgent {
+  id          String      @id @default(cuid())
+  name        String
+  type        AgentType
+  description String?
+  config      Json
+  isActive    Boolean     @default(true)
+  createdAt   DateTime    @default(now())
+  updatedAt   DateTime    @updatedAt
+
+  analytics   Analytics[]
+  
+  @@map("ai_agents")
+}
+
+model Analytics {
+  id          String      @id @default(cuid())
+  event       String
+  data        Json
+  timestamp   DateTime    @default(now())
+
+  userId      String?
+  user        User?       @relation(fields: [userId], references: [id], onDelete: SetNull)
+  
+  agentId     String?
+  agent       AIAgent?    @relation(fields: [agentId], references: [id], onDelete: SetNull)
+  
+  @@map("analytics")
+}
+
+model Deployment {
+  id          String           @id @default(cuid())
+  environment String
+  version     String
+  status      DeploymentStatus @default(PENDING)
+  url         String?
+  logs        Json?
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime         @default(now())
+
+  projectId   String
+  project     Project          @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  
+  @@map("deployments")
+}
+
+model Notification {
+  id        String             @id @default(cuid())
+  title     String
+  message   String
+  type      NotificationType   @default(INFO)
+  isRead    Boolean            @default(false)
+  data      Json?
+  createdAt DateTime           @default(now())
+
+  userId    String
+  
+  @@map("notifications")
+}
+
+// Enums
+enum Role {
+  USER
+  ADMIN
+  SUPER_ADMIN
+}
+
+enum ProjectStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+  ARCHIVED
+}
+
+enum WorkflowStatus {
+  ACTIVE
+  PAUSED
+  ARCHIVED
+}
+
+enum StepType {
+  GITHUB_PUSH
+  AI_ANALYSIS
+  SCRIPT_GENERATION
+  VPS_SETUP
+  ENVIRONMENT_SETUP
+  SECURITY_DEPLOYMENT
+}
+
+enum StepStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum ExecutionStatus {
+  PENDING
+  RUNNING
+  COMPLETED
+  FAILED
+  CANCELLED
+}
+
+enum IntegrationType {
+  VERCEL
+  NETLIFY
+  GITHUB
+  DOCKER
+  GOOGLE_CLOUD
+  FIREBASE
+  STRIPE
+  OPENAI
+}
+
+enum AgentType {
+  ANALYSIS
+  BUSINESS
+  DESIGN
+  ARCHITECTURE
+  DEVELOPMENT
+  TESTING
+  DEVOPS
+  COORDINATION
+}
+
+enum DeploymentStatus {
+  PENDING
+  IN_PROGRESS
+  COMPLETED
+  FAILED
+}
+
+enum NotificationType {
+  INFO
+  SUCCESS
+  WARNING
+  ERROR
+}
