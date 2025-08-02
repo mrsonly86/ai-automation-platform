@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "noEmit": false,
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "target": "ES2020",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true
+  },
+  "include": ["src/server/**/*", "src/security/**/*", "src/agents/**/*", "src/payments/**/*", "src/monitoring/**/*"],
+  "exclude": ["node_modules", "dist", ".next", "src/components", "src/pages"]
+}
