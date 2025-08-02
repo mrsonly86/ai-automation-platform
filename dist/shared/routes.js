@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.setupRoutes = void 0;
-const routes_1 = require("@security/authentication/routes");
-const routes_2 = require("@agents/routes");
-const routes_3 = require("@agents/asset-management/routes");
-const routes_4 = require("@agents/building-management/routes");
-const routes_5 = require("@agents/fleet-management/routes");
-const routes_6 = require("@agents/multi-company/routes");
+const routes_1 = require("../security/authentication/routes");
+const routes_2 = require("../agents/routes");
+const routes_3 = require("../agents/asset-management/routes");
+const routes_4 = require("../agents/building-management/routes");
+const routes_5 = require("../agents/fleet-management/routes");
+const routes_6 = require("../agents/multi-company/routes");
 const setupRoutes = (app) => {
     // API version prefix
     const apiV1 = '/api/v1';

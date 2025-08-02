@@ -7,11 +7,11 @@ const express_1 = __importDefault(require("express"));
 const cors_1 = __importDefault(require("cors"));
 const helmet_1 = __importDefault(require("helmet"));
 const dotenv_1 = __importDefault(require("dotenv"));
-const connection_1 = require("@shared/database/connection");
-const routes_1 = require("@shared/routes");
-const error_handler_1 = require("@shared/middleware/error-handler");
-const logger_1 = require("@shared/utils/logger");
-const rate_limiter_1 = require("@shared/middleware/rate-limiter");
+const connection_1 = require("./shared/database/connection");
+const routes_1 = require("./shared/routes");
+const error_handler_1 = require("./shared/middleware/error-handler");
+const logger_1 = require("./shared/utils/logger");
+const rate_limiter_1 = require("./shared/middleware/rate-limiter");
 // Load environment variables
 dotenv_1.default.config();
 const app = (0, express_1.default)();
@@ -47,13 +47,19 @@ app.use('*', (req, res) => {
 });
 async function startServer() {
     try {
-        // Connect to database
-        await (0, connection_1.connectDatabase)();
+        // Connect to database (skip in demo environment)
+        if (process.env.NODE_ENV !== 'demo') {
+            await (0, connection_1.connectDatabase)();
+        }
+        else {
+            logger_1.logger.info('📊 Demo mode: Skipping database connection');
+        }
         // Start server
         app.listen(PORT, () => {
             logger_1.logger.info(`🚀 Enterprise Management System started on port ${PORT}`);
-            logger_1.logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
+            logger_1.logger.info(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
             logger_1.logger.info(`📊 Health check: http://localhost:${PORT}/health`);
+            logger_1.logger.info(`🏢 API Documentation: http://localhost:${PORT}/api/v1`);
         });
     }
     catch (error) {

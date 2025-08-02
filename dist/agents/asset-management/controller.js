@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.AssetController = exports.AssetCondition = exports.AssetStatus = exports.AssetCategory = void 0;
 const uuid_1 = require("uuid");
-const logger_1 = require("@shared/utils/logger");
+const logger_1 = require("../../shared/utils/logger");
 var AssetCategory;
 (function (AssetCategory) {
     AssetCategory["EQUIPMENT"] = "equipment";

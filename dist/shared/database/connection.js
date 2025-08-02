@@ -5,7 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.disconnectDatabase = exports.connectDatabase = void 0;
 const mongoose_1 = __importDefault(require("mongoose"));
-const logger_1 = require("@shared/utils/logger");
+const logger_1 = require("../utils/logger");
 const connectDatabase = async () => {
     try {
         const mongoUri = process.env.MONGODB_URI || 'mongodb://localhost:27017/enterprise-management';

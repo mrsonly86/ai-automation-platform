@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.BuildingController = exports.MaintenanceType = exports.SpaceType = exports.FacilityType = void 0;
 const uuid_1 = require("uuid");
-const logger_1 = require("@shared/utils/logger");
+const logger_1 = require("../../shared/utils/logger");
 var FacilityType;
 (function (FacilityType) {
     FacilityType["OFFICE"] = "office";

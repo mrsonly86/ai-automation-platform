@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AuthController = void 0;
 const jsonwebtoken_1 = __importDefault(require("jsonwebtoken"));
 const uuid_1 = require("uuid");
-const logger_1 = require("@shared/utils/logger");
+const logger_1 = require("../../shared/utils/logger");
 class AuthController {
     async login(req, res, next) {
         try {

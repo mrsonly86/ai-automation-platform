@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.MultiCompanyController = void 0;
 const uuid_1 = require("uuid");
-const logger_1 = require("@shared/utils/logger");
+const logger_1 = require("../../shared/utils/logger");
 class MultiCompanyController {
     async createCompany(req, res, next) {
         try {

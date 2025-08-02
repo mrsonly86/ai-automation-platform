@@ -51,14 +51,19 @@ app.use('*', (req, res) => {
 
 async function startServer() {
   try {
-    // Connect to database
-    await connectDatabase();
+    // Connect to database (skip in demo environment)
+    if (process.env.NODE_ENV !== 'demo') {
+      await connectDatabase();
+    } else {
+      logger.info('📊 Demo mode: Skipping database connection');
+    }
     
     // Start server
     app.listen(PORT, () => {
       logger.info(`🚀 Enterprise Management System started on port ${PORT}`);
-      logger.info(`🌍 Environment: ${process.env.NODE_ENV}`);
+      logger.info(`🌍 Environment: ${process.env.NODE_ENV || 'development'}`);
       logger.info(`📊 Health check: http://localhost:${PORT}/health`);
+      logger.info(`🏢 API Documentation: http://localhost:${PORT}/api/v1`);
     });
   } catch (error) {
     logger.error('Failed to start server:', error);

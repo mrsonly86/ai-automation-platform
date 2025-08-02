@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.errorHandler = void 0;
-const logger_1 = require("@shared/utils/logger");
+const logger_1 = require("../utils/logger");
 const errorHandler = (error, req, res, next) => {
     logger_1.logger.error('Error occurred:', {
         error: error.message,
