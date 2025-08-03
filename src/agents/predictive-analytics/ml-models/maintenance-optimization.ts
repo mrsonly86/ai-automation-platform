@@ -1,5 +1,5 @@
-import * as tf from '@tensorflow/tfjs-node';
-import { EquipmentData, MaintenanceRecord } from '../../types';
+import * as tf from '@tensorflow/tfjs';
+import { EquipmentData, MaintenanceRecord } from '../../types/index';
 import { logger } from '../../utils/logger';
 
 export interface MaintenanceRecommendation {
