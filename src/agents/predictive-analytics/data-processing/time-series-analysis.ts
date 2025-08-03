@@ -1,8 +1,8 @@
 import { createClient, RedisClientType } from 'redis';
 import { InfluxDB, Point, WriteApi } from '@influxdata/influxdb-client';
-import { SensorReading, EquipmentData } from '../../types/index';
-import { config } from '../../config/config';
-import { logger } from '../../utils/logger';
+import { SensorReading, EquipmentData } from '../../../types/index';
+import { config } from '../../../config/config';
+import { logger } from '../../../utils/logger';
 
 export interface TimeSeriesData {
   timestamp: Date;
@@ -37,6 +37,13 @@ export class TimeSeriesAnalysis {
 
   async initialize(): Promise<void> {
     try {
+      // Demo mode - skip Redis and InfluxDB for demo
+      if (config.nodeEnv === 'development') {
+        logger.info('📊 Time Series Analysis running in demo mode (no Redis/InfluxDB)');
+        this.isInitialized = true;
+        return;
+      }
+
       // Initialize Redis for real-time data buffering
       this.redisClient = createClient({
         url: `redis://${config.redis.host}:${config.redis.port}`,
@@ -71,6 +78,12 @@ export class TimeSeriesAnalysis {
     }
 
     try {
+      // Demo mode - just log the sensor data
+      if (config.nodeEnv === 'development') {
+        logger.debug(`📊 Processing sensor data: ${sensorReading.sensorId} = ${sensorReading.value} ${sensorReading.unit}`);
+        return;
+      }
+
       // Store in Redis for real-time processing
       await this.bufferData(sensorReading);
 
@@ -258,6 +271,28 @@ export class TimeSeriesAnalysis {
     equipmentId: string,
     timeRange: string = '1h'
   ): Promise<Record<string, any>> {
+    if (config.nodeEnv === 'development') {
+      // Demo mode - return mock statistics
+      return {
+        temperature: {
+          mean: [75.2, 76.1, 74.8, 77.3, 75.9],
+          timestamps: Array.from({ length: 5 }, (_, i) => new Date(Date.now() - (4 - i) * 300000).toISOString()),
+          min: 74.8,
+          max: 77.3,
+          avg: 75.86,
+          stdDev: 0.98,
+        },
+        vibration: {
+          mean: [45.1, 44.8, 46.2, 45.7, 44.9],
+          timestamps: Array.from({ length: 5 }, (_, i) => new Date(Date.now() - (4 - i) * 300000).toISOString()),
+          min: 44.8,
+          max: 46.2,
+          avg: 45.34,
+          stdDev: 0.56,
+        },
+      };
+    }
+
     if (!this.influxDB) return {};
 
     const queryApi = this.influxDB.getQueryApi(config.influxdb.org);
@@ -315,6 +350,27 @@ export class TimeSeriesAnalysis {
   }
 
   async getRealtimeMetrics(): Promise<Record<string, any>> {
+    if (config.nodeEnv === 'development') {
+      // Demo mode - return mock metrics
+      return {
+        activeSensors: 15,
+        processingRate: 120,
+        recentAlerts: [
+          {
+            sensorId: 'MOTOR_001_temp',
+            value: 85.5,
+            anomalyScore: 3.2,
+            timestamp: new Date().toISOString(),
+            type: 'temperature',
+            severity: 'medium',
+          },
+        ],
+        lastUpdate: new Date().toISOString(),
+        anomalyThreshold: this.processingConfig.anomalyThreshold,
+        bufferSize: this.processingConfig.bufferSize,
+      };
+    }
+
     if (!this.redisClient) return {};
 
     try {

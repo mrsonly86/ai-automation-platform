@@ -1,5 +1,5 @@
 import express, { Router } from 'express';
-import { logger } from '../utils/logger';
+import { logger } from '../../utils/logger';
 
 export class VietnameseVoiceAgent {
   private router: Router;

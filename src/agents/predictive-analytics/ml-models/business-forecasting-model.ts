@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
-import { BusinessForecast, PredictionData } from '../../types/index';
-import { logger } from '../../utils/logger';
+import { BusinessForecast, PredictionData } from '../../../types/index';
+import { logger } from '../../../utils/logger';
 
 export interface ForecastInput {
   historical_data: number[];

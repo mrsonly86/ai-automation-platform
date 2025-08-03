@@ -2,8 +2,8 @@ import express, { Router, Request, Response } from 'express';
 import { PredictionEngine, PredictionRequest } from './prediction-engine/prediction-scheduler';
 import { TimeSeriesAnalysis } from './data-processing/time-series-analysis';
 import { AnomalyDetection } from './data-processing/anomaly-detection';
-import { EquipmentData, SensorReading, ApiResponse } from '../types/index';
-import { logger } from '../utils/logger';
+import { EquipmentData, SensorReading, ApiResponse } from '../../types/index';
+import { logger } from '../../utils/logger';
 
 export class PredictiveAnalyticsAgent {
   private predictionEngine: PredictionEngine;
@@ -451,15 +451,19 @@ export class PredictiveAnalyticsAgent {
   }
 
   private validateSensorReading(reading: any): reading is SensorReading {
-    return (
-      reading &&
-      typeof reading.sensorId === 'string' &&
-      typeof reading.type === 'string' &&
-      typeof reading.value === 'number' &&
-      typeof reading.unit === 'string' &&
-      reading.timestamp &&
-      !isNaN(new Date(reading.timestamp).getTime())
-    );
+    if (!reading ||
+        typeof reading.sensorId !== 'string' ||
+        typeof reading.type !== 'string' ||
+        typeof reading.value !== 'number' ||
+        typeof reading.unit !== 'string' ||
+        !reading.timestamp ||
+        isNaN(new Date(reading.timestamp).getTime())) {
+      return false;
+    }
+
+    // Convert timestamp string to Date object
+    reading.timestamp = new Date(reading.timestamp);
+    return true;
   }
 
   private async loadSampleEquipmentData(): Promise<void> {

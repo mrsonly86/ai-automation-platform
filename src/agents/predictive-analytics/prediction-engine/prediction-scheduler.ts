@@ -1,8 +1,8 @@
 import { FailurePredictionModel } from '../ml-models/failure-prediction-model';
 import { MaintenanceOptimizationModel, OptimizationResult } from '../ml-models/maintenance-optimization';
 import { BusinessForecastingModel, ForecastInput } from '../ml-models/business-forecasting-model';
-import { EquipmentData, FailurePrediction, BusinessForecast } from '../../types/index';
-import { logger } from '../../utils/logger';
+import { EquipmentData, FailurePrediction, BusinessForecast } from '../../../types/index';
+import { logger } from '../../../utils/logger';
 
 export interface PredictionRequest {
   equipmentIds?: string[];

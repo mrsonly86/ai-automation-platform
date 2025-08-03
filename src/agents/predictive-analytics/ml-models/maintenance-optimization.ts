@@ -1,6 +1,6 @@
 import * as tf from '@tensorflow/tfjs';
-import { EquipmentData, MaintenanceRecord } from '../../types/index';
-import { logger } from '../../utils/logger';
+import { EquipmentData, MaintenanceRecord } from '../../../types/index';
+import { logger } from '../../../utils/logger';
 
 export interface MaintenanceRecommendation {
   equipmentId: string;

@@ -1,7 +1,7 @@
 // Simplified version for demo - using statistical models instead of TensorFlow
 // import * as tf from '@tensorflow/tfjs';
-import { SensorReading, EquipmentData, FailurePrediction } from '../../types/index';
-import { logger } from '../../utils/logger';
+import { SensorReading, EquipmentData, FailurePrediction } from '../../../types/index';
+import { logger } from '../../../utils/logger';
 
 export class FailurePredictionModel {
   private isInitialized = false;

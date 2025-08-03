@@ -1,5 +1,5 @@
-import { SensorReading, EquipmentData } from '../../types/index';
-import { logger } from '../../utils/logger';
+import { SensorReading, EquipmentData } from '../../../types/index';
+import { logger } from '../../../utils/logger';
 
 export interface AnomalyResult {
   isAnomaly: boolean;
